@@ -12,7 +12,7 @@ var connectionstring = "mssql://DB_A16FBA_testingjayani_admin:assass123@SQL5034.
 
 
 
-app.get('/getvehicleno', function(req,res){
+app.get('/api/getvehicleno', function(req,res){
 
 	sql.connect(connectionstring).then(function(){
 
@@ -40,7 +40,7 @@ app.get('/getvehicleno', function(req,res){
 });
 
 
-app.post('/getinvoices', function(req,res){
+app.post('/api/getinvoices', function(req,res){
  var vehicleNo =  req.body.id;
   console.log(req.body);
 	sql.connect(connectionstring).then(function(){
@@ -78,7 +78,7 @@ app.post('/getinvoices', function(req,res){
 
 
 
-app.post('/getinvoice', function(req,res){
+app.post('/api/getinvoice', function(req,res){
 
 
 var invoiceid = req.body.id;
@@ -111,13 +111,282 @@ console.log("invoice ID : " + invoiceid);
 })
 
 
+app.post('/api/finishtransport', function(req,res){
+
+var invoiceid = req.body.invoiceid;
+//var productCode = req.body.productCode;
+
+
+//Customer
+
+var endmilage = req.body.endmilage;
+var charges = req.body.charges;
+var discount = req.body.discount;
+var paidamount = req.body.paidamount;
 
 
 
+	sql.connect(connectionstring).then(function(){
+
+			var query = "Update Transport_Details_Tbl set  End_Milage = '"+endmilage+"' , Charges  = '"+charges+"' , Discount = '"+discount+"' , Paid_Amount = '"+paidamount+"'  where 	Invoice_No = '"+invoiceid+"' ";
+
+			new sql.Request().query(query).then(function(result){
+
+
+			var obj = {
+				status:200,
+				result:result
+			}
+			res.send(obj);
+
+
+			}).catch(function(er){
+				res.send({
+			status:400,
+			result:er
+		})
+			})
 
 
 
+	}).catch(function(err){
+		res.send({
+			status:500,
+			result:err
+		})
+	})
 
+})
+
+
+
+app.post('/api/finishproduct', function(req,res){
+
+var pno = req.body.productcode;
+var status = req.body.status;
+var invoiceno =req.body.invoiceno;
+//var productCode = req.body.productCode;
+
+
+//Customer
+
+
+
+	sql.connect(connectionstring).then(function(result){
+
+			var query = "Update Invoice_Product_Tbl set  Tr_Status = '"+status+"' where PNo = '"+pno+"' and Invoice_No = '"+invoiceno+"' ";
+
+			new sql.Request().query(query).then(function(){
+
+
+			var obj = {
+				status:200,
+				result:result
+			}
+			res.send(obj);
+
+
+			}).catch(function(er){
+				res.send({
+			status:400,
+			result:er
+		})
+			})
+
+
+
+	}).catch(function(err){
+		res.send({
+			status:500,
+			result:err
+		})
+	})
+
+})
+
+
+
+app.post('/api/finishinvoice', function(req,res){
+
+var invoiceno = req.body.invoiceno;
+var status = req.body.status;
+//var productCode = req.body.productCode;
+
+
+//Customer
+
+
+
+	sql.connect(connectionstring).then(function(result){
+
+			var query = "Update Invoice_Tbl set  Delivery_Status = '"+status+"' where Invoice_No = '"+invoiceno+"' ";
+
+			new sql.Request().query(query).then(function(){
+
+
+			var obj = {
+				status:200,
+				result:result
+			}
+			res.send(obj);
+
+
+			}).catch(function(er){
+				res.send({
+			status:400,
+			result:er
+		})
+			})
+
+
+
+	}).catch(function(err){
+		res.send({
+			status:500,
+			result:err
+		})
+	})
+
+})
+
+
+app.post('/api/viewlocation', function(req,res){
+
+var delid = req.body.delid;
+
+//var productCode = req.body.productCode;
+
+
+//Customer
+
+
+
+	sql.connect(connectionstring).then(function(){
+
+			var query = "select * from location_Tbl where delId = '"+delid+"' ";
+			console.log("select * from location_Tbl where delId = '"+delid+"' ");
+
+			new sql.Request().query(query).then(function(result){
+
+
+			var obj = {
+				status:200,
+				result:result
+			}
+			res.send(obj);
+
+
+			}).catch(function(er){
+				res.send({
+			status:400,
+			result:er
+		})
+			})
+
+
+
+	}).catch(function(err){
+		res.send({
+			status:500,
+			result:err
+		})
+	})
+
+})
+
+
+
+app.post('/api/addlocation', function(req,res){
+
+var delid = req.body.delid;
+var lat  = req.body.lat;
+var lng = req.body.lng;
+
+//var productCode = req.body.productCode;
+
+
+//Customer
+
+
+
+	sql.connect(connectionstring).then(function(){
+
+			var query = "Insert Into location_Tbl(delid,lat,lng) VALUES('"+delid+"' , '"+lat+"' , '"+lng+"') ";
+
+			new sql.Request().query(query).then(function(result){
+
+
+			var obj = {
+				status:200,
+				result:result
+			}
+			res.send(obj);
+
+
+			}).catch(function(er){
+				res.send({
+			status:400,
+			result:er
+		})
+			})
+
+
+
+	}).catch(function(err){
+		res.send({
+			status:500,
+			result:err
+		})
+	})
+
+})
+
+
+
+app.post('/api/updatelocation', function(req,res){
+
+var delid = req.body.delid;
+var lat  = req.body.lat;
+var lng = req.body.lng;
+
+//var productCode = req.body.productCode;
+
+
+//Customer
+
+
+
+	sql.connect(connectionstring).then(function(){
+
+			var query = "Update location_Tbl Set lat = '"+lat+"', lng ='"+lng+"' where delId = '"+delid+"' ";
+
+			new sql.Request().query(query).then(function(result){
+
+
+			var obj = {
+				status:200,
+				result:result
+			}
+			res.send(obj);
+
+
+			}).catch(function(er){
+				res.send({
+			status:400,
+			result:er
+		})
+			})
+
+
+
+	}).catch(function(err){
+		res.send({
+			status:500,
+			result:err
+		})
+	})
+
+})
 
 
 
