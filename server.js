@@ -11,6 +11,12 @@ app.use(bodyParser.urlencoded({ extended: true })); // support encoded bodies
 var connectionstring = "mssql://DB_A16FBA_testingjayani_admin:assass123@SQL5034.SmarterASP.NET/DB_A16FBA_testingjayani";
 
 
+app.get('/', function(req,res){
+
+res.send("API V2");
+
+})
+
 
 app.get('/api/getvehicleno', function(req,res){
 
