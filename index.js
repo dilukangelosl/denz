@@ -5,7 +5,11 @@ var sql = require('mssql');
 var bodyParser = require('body-parser');
 app.use(bodyParser.json()); // support json encoded bodies
 app.use(bodyParser.urlencoded({ extended: true })); // support encoded bodies
-
+app.use(function(req, res, next) {
+  res.header("Access-Control-Allow-Origin", "*");
+  res.header("Access-Control-Allow-Headers", "X-Requested-With");
+  next();
+});
 
 
 var connectionstring = "mssql://DB_A16FBA_testingjayani_admin:assass123@SQL5034.SmarterASP.NET/DB_A16FBA_testingjayani";
