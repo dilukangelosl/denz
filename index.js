@@ -96,7 +96,7 @@ console.log("invoice ID : " + invoiceid);
 	sql.connect(connectionstring).then(function(){
 
 
-		new sql.Request().query("Select * from Invoice_Tbl INNER JOIN Customer_Tbl on  Invoice_Tbl.NIC =  Customer_Tbl.NIC  INNER JOIN  Invoice_Product_Tbl on  Invoice_Product_Tbl.Invoice_No = Invoice_Tbl.Invoice_No where Invoice_Tbl.Invoice_No = '"+invoiceid+"'").then(function(result){
+		new sql.Request().query("Select * from Invoice_Tbl INNER JOIN Customer_Tbl on  Invoice_Tbl.NIC =  Customer_Tbl.NIC  INNER JOIN  Invoice_Product_Tbl on  Invoice_Product_Tbl.Invoice_No = Invoice_Tbl.Invoice_No INNER JOIN Product_Tbl.PCode on Invoice_Product_Tbl = Product_Tbl.P_Code where Invoice_Tbl.Invoice_No = '"+invoiceid+"'").then(function(result){
 				var obj = {
 				status:200,
 				result:result
