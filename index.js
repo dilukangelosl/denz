@@ -140,6 +140,7 @@ var paidamount = req.body.paidamount;
 
 			var query = "Update Transport_Details_Tbl set  End_Milage = '"+endmilage+"' , Charges  = '"+charges+"' , Discount = '"+discount+"' , Paid_Amount = '"+paidamount+"'  where 	Invoice_No = '"+invoiceid+"' ";
 
+			console.log(query);
 			new sql.Request().query(query).then(function(result){
 
 
@@ -185,7 +186,7 @@ var invoiceno =req.body.invoiceno;
 	sql.connect(connectionstring).then(function(result){
 
 			var query = "Update Invoice_Product_Tbl set  Tr_Status = '"+status+"' where PNo = '"+pno+"' and Invoice_No = '"+invoiceno+"' ";
-
+			console.log(query);
 			new sql.Request().query(query).then(function(){
 
 
@@ -230,7 +231,7 @@ var status = req.body.status;
 	sql.connect(connectionstring).then(function(result){
 
 			var query = "Update Invoice_Tbl set  Delivery_Status = '"+status+"' where Invoice_No = '"+invoiceno+"' ";
-
+			console.log(query);
 			new sql.Request().query(query).then(function(){
 
 
@@ -322,7 +323,7 @@ var lng = req.body.lng;
 	sql.connect(connectionstring).then(function(){
 
 			var query = "Insert Into location_Tbl(delid,lat,lng) VALUES('"+delid+"' , '"+lat+"' , '"+lng+"') ";
-
+			console.log(query);
 			new sql.Request().query(query).then(function(result){
 
 
@@ -369,7 +370,7 @@ var lng = req.body.lng;
 	sql.connect(connectionstring).then(function(){
 
 			var query = "Update location_Tbl Set lat = '"+lat+"', lng ='"+lng+"' where delId = '"+delid+"' ";
-
+			console.log(query);
 			new sql.Request().query(query).then(function(result){
 
 
