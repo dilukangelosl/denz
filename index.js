@@ -50,6 +50,42 @@ app.get('/api/getvehicleno', function(req,res){
 });
 
 
+
+
+app.get('/api/getallinvoices', function(req,res){
+
+		sql.connect(connectionstring).then(function(){
+
+			var query = "Select * from Transport_Details_Tbl ";
+			new sql.Request().query(query).then(function(result){
+
+					var obj = {
+				status:200,
+				result:result
+			}
+			res.send(obj);
+			}).catch(function(er){
+
+					var obj = {
+					status:500,
+					result:er
+				}
+				res.send(obj)
+			})
+
+		}).catch(function(err){
+
+			//sql connection error
+			var obj = {
+					status:500,
+					result:err
+				}
+				res.send(obj)
+		})
+
+})
+
+
 app.post('/api/getinvoices', function(req,res){
  var vehicleNo =  req.body.id;
   console.log(req.body);
@@ -85,6 +121,45 @@ app.post('/api/getinvoices', function(req,res){
 
 	  })
     })
+
+
+
+app.post('/api/invoicesearch', function(req,res){
+ var search =  req.body.search;
+  console.log(req.body);
+	sql.connect(connectionstring).then(function(){
+
+
+  new sql.Request().query("Select * from Transport_Details_Tbl where Invoice_No  LIKE '"+search+"%'  ").then(function(result){
+
+
+
+		var obj = {
+				status:200,
+				result:result
+			}
+			res.send(obj);
+
+     }).catch(function(er){
+     	var obj = {
+					status:500,
+					result:er
+				}
+				res.send(obj)
+     })
+
+
+	}).catch(function(err){
+				
+				var obj = {
+					status:500,
+					result:err
+				}
+				res.send(obj)
+
+	  })
+    })
+
 
 
 
