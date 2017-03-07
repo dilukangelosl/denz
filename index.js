@@ -50,6 +50,9 @@ app.get('/api/getvehicleno', function(req,res){
 });
 
 
+
+
+
 app.get('/api/auth', function(req,res){
 
 	sql.connect(connectionstring).then(function(){
@@ -597,6 +600,50 @@ var time = req.body.time;
 
 })
 
+
+
+
+app.post('/api/getcurrentlocation', function(req,res){
+
+var vehicleid = req.body.id;
+
+//var productCode = req.body.productCode;
+
+
+//Customer
+
+
+
+	sql.connect(connectionstring).then(function(){
+
+			var query = "Select * from currentlocation_Tbl where vehicleno = '"+vehicleid+"'";	console.log(query);
+			new sql.Request().query(query).then(function(result){
+
+
+			var obj = {
+				status:200,
+				result:result
+			}
+			res.send(obj);
+
+
+			}).catch(function(er){
+				res.send({
+			status:400,
+			result:er
+		})
+			})
+
+
+
+	}).catch(function(err){
+		res.send({
+			status:500,
+			result:err
+		})
+	})
+
+})
 
 
 
