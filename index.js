@@ -50,6 +50,35 @@ app.get('/api/getvehicleno', function(req,res){
 });
 
 
+app.get('/api/auth', function(req,res){
+
+	sql.connect(connectionstring).then(function(){
+
+		new sql.Request().query("select * from mobileauth").then(function(result){
+
+			var obj = {
+				status:200,
+				result:result
+			}
+			res.send(obj);
+		}).catch(function(er){
+			var obj ={
+				status:400,
+				result:er
+			}
+		})
+
+	}).catch(function(err){
+				var obj = {
+					status:500,
+					result:err
+				}
+				res.send(obj)
+	})
+});
+
+
+
 
 
 app.get('/api/getallinvoices', function(req,res){
