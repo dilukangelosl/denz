@@ -504,6 +504,100 @@ var lng = req.body.lng;
 })
 
 
+app.post('/api/updatecurrentlocation', function(req,res){
+
+var id = req.body.id;
+var lat  = req.body.lat;
+var lng = req.body.lng;
+var lng = req.body.time;
+
+//var productCode = req.body.productCode;
+
+
+//Customer
+
+
+
+	sql.connect(connectionstring).then(function(){
+
+			var query = "Update currentlocation_Tbl Set lat = '"+lat+"', lng ='"+lng+"' , timestamp ='"+time+"'where vehicleno = '"+id+"' ";
+			console.log(query);
+			new sql.Request().query(query).then(function(result){
+
+
+			var obj = {
+				status:200,
+				result:result
+			}
+			res.send(obj);
+
+
+			}).catch(function(er){
+				res.send({
+			status:400,
+			result:er
+		})
+			})
+
+
+
+	}).catch(function(err){
+		res.send({
+			status:500,
+			result:err
+		})
+	})
+
+})
+
+
+
+app.post('/api/addcurrentlocation', function(req,res){
+
+var vehicleid = req.body.id;
+var lat  = req.body.lat;
+var lng = req.body.lng;
+var time = req.body.time;
+
+//var productCode = req.body.productCode;
+
+
+//Customer
+
+
+
+	sql.connect(connectionstring).then(function(){
+
+			var query = "Insert Into currentlocation_Tbl(vehicleno,lat,lng,timestamp) VALUES('"+id+"' , '"+lat+"' , '"+lng+"', '"+time+"') ";	console.log(query);
+			new sql.Request().query(query).then(function(result){
+
+
+			var obj = {
+				status:200,
+				result:result
+			}
+			res.send(obj);
+
+
+			}).catch(function(er){
+				res.send({
+			status:400,
+			result:er
+		})
+			})
+
+
+
+	}).catch(function(err){
+		res.send({
+			status:500,
+			result:err
+		})
+	})
+
+})
+
+
 
 
 
